@@ -8,18 +8,20 @@ import starboyCover from "./assets/albums/starboy.jpg";
 
 const songs = [
   {
-    id: 1,
-    title: "Believer",
-    artist: "Imagine Dragons",
-    cover: believerCover,
-    audio: believerAudio,
-  },
+  id: 1,
+  title: "Believer",
+  artist: "Imagine Dragons",
+  cover: believerCover,
+  audio: believerAudio,
+  duration: "3:36"
+},
   {
     id: 2,
     title: "Blinding Lights",
     artist: "The Weeknd",
     cover: blindingLightsCover,
     audio: blindingLightsAudio,
+    duration: "3:23"  
   },
   {
     id: 3,
@@ -27,6 +29,7 @@ const songs = [
     artist: "The Weeknd",
     cover: starboyCover,
     audio: starboyAudio,
+    duration: "4:33"
   },
 ];
 

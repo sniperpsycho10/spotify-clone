@@ -11,7 +11,7 @@ import { Routes, Route } from "react-router-dom";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
-
+  const [isPlaying, setIsPlaying] = useState(false);
   return (
     <>
       <div
@@ -51,7 +51,11 @@ function App() {
         </div>
       </div>
 
-      <MusicPlayer currentSong={currentSong} />
+      <MusicPlayer
+        currentSong={currentSong}
+        isPlaying={isPlaying}
+        setIsPlaying={setIsPlaying}
+      />
     </>
   );
 }
