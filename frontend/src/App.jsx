@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { Routes, Route } from "react-router-dom";
+
 import Sidebar from "./components/Sidebar";
 import MusicPlayer from "./components/MusicPlayer";
 
@@ -7,11 +9,13 @@ import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Library from "./pages/Library";
 
-import { Routes, Route } from "react-router-dom";
+import songs from "./songs";
 
 function App() {
   const [currentSong, setCurrentSong] = useState(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
+
   return (
     <>
       <div
@@ -52,7 +56,9 @@ function App() {
       </div>
 
       <MusicPlayer
+        songs={songs}
         currentSong={currentSong}
+        setCurrentSong={setCurrentSong}
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}
       />
