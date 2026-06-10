@@ -1,5 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./MusicPlayer.css";
+import { MusicContext } from "../context/MusicContext";
+
 
 function MusicPlayer({
   songs,
@@ -10,9 +12,70 @@ function MusicPlayer({
 }) {
   const audioRef = useRef(null);
 
+  const {
+  likedSongs,
+  toggleLikeSong,
+  queue,
+  removeFromQueue,
+} = useContext(MusicContext);
+
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
+  useEffect(() => {
+  const handleKeyDown = (e) => {
+
+    if (
+      e.target.tagName === "INPUT"
+    )
+      return;
+
+    // SPACE = Play/Pause
+
+    if (e.code === "Space") {
+      e.preventDefault();
+
+      togglePlayPause();
+    }
+
+    // RIGHT ARROW = +10 sec
+
+    if (e.code === "ArrowRight") {
+      if (audioRef.current) {
+        audioRef.current.currentTime =
+          Math.min(
+            audioRef.current.currentTime + 10,
+            duration
+          );
+      }
+    }
+
+    // LEFT ARROW = -10 sec
+
+    if (e.code === "ArrowLeft") {
+      if (audioRef.current) {
+        audioRef.current.currentTime =
+          Math.max(
+            audioRef.current.currentTime - 10,
+            0
+          );
+      }
+    }
+  };
+
+  window.addEventListener(
+    "keydown",
+    handleKeyDown
+  );
+
+  return () =>
+    window.removeEventListener(
+      "keydown",
+      handleKeyDown
+    );
+}, [isPlaying, duration]);
+
+
 
   useEffect(() => {
     if (currentSong && audioRef.current) {
@@ -37,6 +100,21 @@ function MusicPlayer({
       setDuration(audio.duration);
 
     const handleSongEnd = () => {
+      if (queue.length > 0) {
+        const nextQueuedSong =
+          queue[0];
+
+        setCurrentSong(
+          nextQueuedSong
+        );
+
+        removeFromQueue(
+          nextQueuedSong.id
+        );
+
+        return;
+      }
+
       nextSong();
     };
 
@@ -147,8 +225,18 @@ function MusicPlayer({
           <div className="song-title-row">
             <h4>{currentSong.title}</h4>
 
-            <span className="like-btn">
-              ♡
+            <span
+              className="like-btn"
+              onClick={() =>
+                toggleLikeSong(currentSong)
+              }
+            >
+              {likedSongs.find(
+                (song) =>
+                  song.id === currentSong.id
+              )
+                ? "❤️"
+                : "🤍"}
             </span>
           </div>
 
@@ -184,6 +272,9 @@ function MusicPlayer({
           >
             ⏭
           </button>
+          
+
+
         </div>
 
         <div className="progress-row">
@@ -231,12 +322,14 @@ function MusicPlayer({
         />
       </div>
 
-      <audio ref={audioRef}>
-        <source
-          src={currentSong.audio}
-          type="audio/mpeg"
-        />
-      </audio>
+      <>
+        <audio ref={audioRef}>
+          <source
+            src={currentSong.audio}
+            type="audio/mpeg"
+          />
+        </audio>
+      </>
     </div>
   );
 }

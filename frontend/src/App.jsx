@@ -1,26 +1,40 @@
-import { useState } from "react";
-
+import { useState, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
 import Sidebar from "./components/Sidebar";
 import MusicPlayer from "./components/MusicPlayer";
+import RightSidebar from "./components/RightSidebar";
 
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import Library from "./pages/Library";
+import LikedSongs from "./pages/LikedSongs";
 
 import songs from "./songs";
 
-function App() {
-  const [currentSong, setCurrentSong] = useState(null);
+import { MusicContext } from "./context/MusicContext";
 
-  const [isPlaying, setIsPlaying] = useState(false);
+function App() {
+  const [currentSong, setCurrentSong] =
+    useState(null);
+
+  const [isPlaying, setIsPlaying] =
+    useState(false);
+
+  const { addRecentlyPlayed } =
+    useContext(MusicContext);
+
+  const handleSongSelect = (song) => {
+    setCurrentSong(song);
+    addRecentlyPlayed(song);
+  };
 
   return (
     <>
       <div
         style={{
           display: "flex",
+          height: "100vh",
         }}
       >
         <Sidebar />
@@ -29,7 +43,8 @@ function App() {
           style={{
             flex: 1,
             padding: "30px",
-            marginBottom: "100px",
+            marginBottom: "130px",
+            overflowY: "auto",
           }}
         >
           <Routes>
@@ -37,7 +52,20 @@ function App() {
               path="/"
               element={
                 <Home
-                  onSelectSong={setCurrentSong}
+                  onSelectSong={
+                    handleSongSelect
+                  }
+                />
+              }
+            />
+
+            <Route
+              path="/liked"
+              element={
+                <LikedSongs
+                  onSelectSong={
+                    handleSongSelect
+                  }
                 />
               }
             />
@@ -46,7 +74,9 @@ function App() {
               path="/search"
               element={
                 <Search
-                  onSelectSong={setCurrentSong}
+                  onSelectSong={
+                    handleSongSelect
+                  }
                 />
               }
             />
@@ -57,6 +87,12 @@ function App() {
             />
           </Routes>
         </div>
+
+        <RightSidebar
+          setCurrentSong={
+            handleSongSelect
+          }
+        />
       </div>
 
       <MusicPlayer
