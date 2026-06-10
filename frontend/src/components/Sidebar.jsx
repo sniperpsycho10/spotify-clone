@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
@@ -21,35 +21,55 @@ function Sidebar() {
         Spotify
       </h1>
 
-      <Link
+      <NavLink
         to="/"
-        style={{
-          color: "white",
+        style={({ isActive }) => ({
+          color: isActive ? "#1DB954" : "white",
           textDecoration: "none",
+          marginBottom: "20px",
+          fontWeight: isActive ? "bold" : "normal",
+        })}
+      >
+        🏠 Home
+      </NavLink>
+
+      <NavLink
+        to="/search"
+        style={({ isActive }) => ({
+          color: isActive ? "#1DB954" : "white",
+          textDecoration: "none",
+          marginBottom: "20px",
+          fontWeight: isActive ? "bold" : "normal",
+        })}
+      >
+        🔍 Search
+      </NavLink>
+
+      <NavLink
+        to="/library"
+        style={({ isActive }) => ({
+          color: isActive ? "#1DB954" : "white",
+          textDecoration: "none",
+          marginBottom: "30px",
+          fontWeight: isActive ? "bold" : "normal",
+        })}
+      >
+        📚 Your Library
+      </NavLink>
+
+      <h3
+        style={{
           marginBottom: "20px",
         }}
       >
-        🏠 Home
-      </Link>
+        Your Library
+      </h3>
 
-      <Link
-        to="/search"
-        style={{
-          color: "white",
-          textDecoration: "none",
-          marginBottom: "30px",
-        }}
-      >
-        🔍 Search
-      </Link>
-
-      <h3>Your Library</h3>
-
-      <div style={{ marginTop: "20px" }}>
+      <div style={{ marginBottom: "15px" }}>
         <p>➕ Create Playlist</p>
       </div>
 
-      <div style={{ marginTop: "15px" }}>
+      <div>
         <p>❤️ Liked Songs</p>
       </div>
     </div>

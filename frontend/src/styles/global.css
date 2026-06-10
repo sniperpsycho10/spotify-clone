@@ -1,11 +1,23 @@
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-    background-color:#121212;
-    color:white;
-    font-family:Arial, Helvetica, sans-serif;
+  background:#121212;
+  color:white;
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+}
+
+::-webkit-scrollbar{
+  width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:#333;
+  border-radius:10px;
 }

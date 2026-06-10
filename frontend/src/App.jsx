@@ -44,7 +44,11 @@ function App() {
 
             <Route
               path="/search"
-              element={<Search />}
+              element={
+                <Search
+                  onSelectSong={setCurrentSong}
+                />
+              }
             />
 
             <Route
