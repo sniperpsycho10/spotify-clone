@@ -1,4 +1,15 @@
+import { useEffect, useRef } from "react";
+
 function MusicPlayer({ currentSong }) {
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (currentSong && audioRef.current) {
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [currentSong]);
+
   return (
     <div
       style={{
@@ -6,16 +17,27 @@ function MusicPlayer({ currentSong }) {
         bottom: 0,
         left: 250,
         right: 0,
-        height: "80px",
+        height: "90px",
         backgroundColor: "#181818",
         borderTop: "1px solid #333",
         display: "flex",
         alignItems: "center",
-        padding: "0 20px",
+        padding: "10px 20px",
+        gap: "15px",
       }}
     >
       {currentSong ? (
         <>
+          <img
+            src={currentSong.cover}
+            alt={currentSong.title}
+            style={{
+              width: "60px",
+              height: "60px",
+              objectFit: "cover",
+            }}
+          />
+
           <div>
             <h3>{currentSong.title}</h3>
             <p style={{ color: "gray" }}>
@@ -23,14 +45,19 @@ function MusicPlayer({ currentSong }) {
             </p>
           </div>
 
-          <div
+          <audio
+            controls
+            ref={audioRef}
             style={{
-              marginLeft: "50px",
-              fontSize: "30px",
+              marginLeft: "30px",
+              width: "400px",
             }}
           >
-            ▶️
-          </div>
+            <source
+              src={currentSong.audio}
+              type="audio/mpeg"
+            />
+          </audio>
         </>
       ) : (
         <p>Select a song</p>

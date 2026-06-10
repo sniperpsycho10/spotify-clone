@@ -10,17 +10,19 @@ function SongCard({ song, onSelectSong }) {
         cursor: "pointer",
       }}
     >
-      <div
+      <img
+        src={song.cover}
+        alt={song.title}
         style={{
+          width: "100%",
           height: "150px",
-          backgroundColor: "#282828",
+          objectFit: "cover",
           borderRadius: "8px",
           marginBottom: "10px",
         }}
-      ></div>
+      />
 
       <h3>{song.title}</h3>
-
       <p style={{ color: "gray" }}>
         {song.artist}
       </p>
