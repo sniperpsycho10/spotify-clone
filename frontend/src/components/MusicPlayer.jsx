@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 
 function MusicPlayer({
+  songs,
   currentSong,
+  setCurrentSong,
   isPlaying,
   setIsPlaying,
 }) {
@@ -9,6 +11,7 @@ function MusicPlayer({
 
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
 
   useEffect(() => {
     if (currentSong && audioRef.current) {
@@ -19,9 +22,7 @@ function MusicPlayer({
         .then(() => {
           setIsPlaying(true);
         })
-        .catch((err) => {
-          console.log(err);
-        });
+        .catch((err) => console.log(err));
     }
   }, [currentSong, setIsPlaying]);
 
@@ -38,15 +39,13 @@ function MusicPlayer({
       setDuration(audio.duration);
     };
 
-    audio.addEventListener(
-      "timeupdate",
-      updateTime
-    );
+    const handleSongEnd = () => {
+      nextSong();
+    };
 
-    audio.addEventListener(
-      "loadedmetadata",
-      updateDuration
-    );
+    audio.addEventListener("timeupdate", updateTime);
+    audio.addEventListener("loadedmetadata", updateDuration);
+    audio.addEventListener("ended", handleSongEnd);
 
     return () => {
       audio.removeEventListener(
@@ -58,20 +57,13 @@ function MusicPlayer({
         "loadedmetadata",
         updateDuration
       );
+
+      audio.removeEventListener(
+        "ended",
+        handleSongEnd
+      );
     };
   }, [currentSong]);
-
-  const togglePlayPause = () => {
-    if (!audioRef.current) return;
-
-    if (isPlaying) {
-      audioRef.current.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current.play();
-      setIsPlaying(true);
-    }
-  };
 
   const formatTime = (time) => {
     if (!time) return "0:00";
@@ -85,6 +77,53 @@ function MusicPlayer({
       .padStart(2, "0")}`;
   };
 
+  const togglePlayPause = () => {
+    if (!audioRef.current) return;
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      audioRef.current.play();
+      setIsPlaying(true);
+    }
+  };
+
+  const nextSong = () => {
+    if (!currentSong) return;
+
+    const currentIndex = songs.findIndex(
+      (song) => song.id === currentSong.id
+    );
+
+    const nextIndex =
+      (currentIndex + 1) % songs.length;
+
+    setCurrentSong(songs[nextIndex]);
+  };
+
+  const previousSong = () => {
+    if (!currentSong) return;
+
+    const currentIndex = songs.findIndex(
+      (song) => song.id === currentSong.id
+    );
+
+    const prevIndex =
+      (currentIndex - 1 + songs.length) %
+      songs.length;
+
+    setCurrentSong(songs[prevIndex]);
+  };
+
+  const changeVolume = (value) => {
+    setVolume(value);
+
+    if (audioRef.current) {
+      audioRef.current.volume = value;
+    }
+  };
+
   return (
     <div
       style={{
@@ -92,7 +131,7 @@ function MusicPlayer({
         bottom: 0,
         left: 250,
         right: 0,
-        height: "90px",
+        height: "100px",
         backgroundColor: "#181818",
         borderTop: "1px solid #333",
         display: "flex",
@@ -103,7 +142,7 @@ function MusicPlayer({
     >
       {currentSong ? (
         <>
-          {/* LEFT SIDE */}
+          {/* LEFT */}
           <div
             style={{
               display: "flex",
@@ -119,6 +158,7 @@ function MusicPlayer({
                 width: "60px",
                 height: "60px",
                 objectFit: "cover",
+                borderRadius: "4px",
               }}
             />
 
@@ -138,27 +178,61 @@ function MusicPlayer({
           {/* CENTER */}
           <div
             style={{
+              width: "550px",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              width: "500px",
+              gap: "10px",
             }}
           >
-            <button
-              onClick={togglePlayPause}
+            <div
               style={{
-                background: "#1DB954",
-                border: "none",
-                width: "50px",
-                height: "50px",
-                borderRadius: "50%",
-                cursor: "pointer",
-                fontSize: "18px",
-                marginBottom: "8px",
+                display: "flex",
+                gap: "15px",
+                alignItems: "center",
               }}
             >
-              {isPlaying ? "⏸" : "▶"}
-            </button>
+              <button
+                onClick={previousSong}
+                style={{
+                  background: "transparent",
+                  color: "white",
+                  border: "none",
+                  fontSize: "22px",
+                  cursor: "pointer",
+                }}
+              >
+                ⏮
+              </button>
+
+              <button
+                onClick={togglePlayPause}
+                style={{
+                  background: "#1DB954",
+                  border: "none",
+                  width: "50px",
+                  height: "50px",
+                  borderRadius: "50%",
+                  cursor: "pointer",
+                  fontSize: "18px",
+                }}
+              >
+                {isPlaying ? "⏸" : "▶"}
+              </button>
+
+              <button
+                onClick={nextSong}
+                style={{
+                  background: "transparent",
+                  color: "white",
+                  border: "none",
+                  fontSize: "22px",
+                  cursor: "pointer",
+                }}
+              >
+                ⏭
+              </button>
+            </div>
 
             <div
               style={{
@@ -196,14 +270,27 @@ function MusicPlayer({
             </div>
           </div>
 
-          {/* RIGHT SIDE */}
+          {/* RIGHT */}
           <div
             style={{
-              width: "150px",
-              textAlign: "right",
+              width: "200px",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
             }}
           >
-            🎵 Playing
+            <span>🔊</span>
+
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={volume}
+              onChange={(e) =>
+                changeVolume(e.target.value)
+              }
+            />
           </div>
 
           <audio ref={audioRef}>
