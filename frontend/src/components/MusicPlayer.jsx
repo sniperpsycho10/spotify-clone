@@ -1,7 +1,17 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import "./MusicPlayer.css";
 import { MusicContext } from "../context/MusicContext";
-
+import {
+  FaPlay,
+  FaPause,
+  FaStepForward,
+  FaStepBackward,
+  FaVolumeUp,
+  FaHeart,
+  FaRegHeart,
+  FaRandom,
+  FaRedo,
+} from "react-icons/fa";
 
 function MusicPlayer({
   songs,
@@ -22,6 +32,10 @@ function MusicPlayer({
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [volume, setVolume] = useState(1);
+  const [shuffle, setShuffle] =
+    useState(false);
+  const [repeatMode, setRepeatMode] =
+    useState("off");
   useEffect(() => {
   const handleKeyDown = (e) => {
 
@@ -100,24 +114,14 @@ function MusicPlayer({
       setDuration(audio.duration);
 
     const handleSongEnd = () => {
-      if (queue.length > 0) {
-        const nextQueuedSong =
-          queue[0];
-
-        setCurrentSong(
-          nextQueuedSong
-        );
-
-        removeFromQueue(
-          nextQueuedSong.id
-        );
-
+      if (repeatMode === "one") {
+        audioRef.current.currentTime = 0;
+        audioRef.current.play();
         return;
       }
 
       nextSong();
     };
-
     audio.addEventListener(
       "timeupdate",
       updateTime
@@ -178,14 +182,31 @@ function MusicPlayer({
   const nextSong = () => {
     if (!currentSong) return;
 
-    const currentIndex = songs.findIndex(
-      (song) => song.id === currentSong.id
-    );
+    if (shuffle) {
+      const randomIndex = Math.floor(
+        Math.random() * songs.length
+      );
+
+      setCurrentSong(
+        songs[randomIndex]
+      );
+
+      return;
+    }
+
+    const currentIndex =
+      songs.findIndex(
+        (song) =>
+          song.id === currentSong.id
+      );
 
     const nextIndex =
-      (currentIndex + 1) % songs.length;
+      (currentIndex + 1) %
+      songs.length;
 
-    setCurrentSong(songs[nextIndex]);
+    setCurrentSong(
+      songs[nextIndex]
+    );
   };
 
   const previousSong = () => {
@@ -235,8 +256,8 @@ function MusicPlayer({
                 (song) =>
                   song.id === currentSong.id
               )
-                ? "❤️"
-                : "🤍"}
+                ? <FaHeart />
+                : <FaRegHeart />}
             </span>
           </div>
 
@@ -254,27 +275,63 @@ function MusicPlayer({
         <div className="controls">
           <button
             className="control-btn"
+            onClick={() =>
+              setShuffle(!shuffle)
+            }
+            style={{
+              color: shuffle
+                ? "#1DB954"
+                : "white",
+            }}
+          >
+            <FaRandom />
+          </button>
+
+          <button
+            className="control-btn"
             onClick={previousSong}
           >
-            ⏮
+            <FaStepBackward />
           </button>
 
           <button
             className="play-btn"
             onClick={togglePlayPause}
           >
-            {isPlaying ? "⏸" : "▶"}
+            {isPlaying ? (
+              <FaPause />
+            ) : (
+              <FaPlay />
+            )}
           </button>
 
           <button
             className="control-btn"
             onClick={nextSong}
           >
-            ⏭
+            <FaStepForward />
           </button>
-          
 
-
+          <button
+            className="control-btn"
+            onClick={() =>
+              setRepeatMode(
+                repeatMode === "off"
+                  ? "all"
+                  : repeatMode === "all"
+                  ? "one"
+                  : "off"
+              )
+            }
+            style={{
+              color:
+                repeatMode !== "off"
+                  ? "#1DB954"
+                  : "white",
+            }}
+          >
+            <FaRedo />
+          </button>
         </div>
 
         <div className="progress-row">
@@ -306,7 +363,7 @@ function MusicPlayer({
 
       <div className="volume-section">
         <span className="volume-icon">
-          🔊
+          <FaVolumeUp />
         </span>
 
         <input
