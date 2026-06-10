@@ -131,7 +131,9 @@ function MusicPlayer({
         bottom: 0,
         left: 250,
         right: 0,
-        height: "100px",
+        height: "110px",
+        boxShadow:
+          "0px -5px 15px rgba(0,0,0,0.3)",
         backgroundColor: "#181818",
         borderTop: "1px solid #333",
         display: "flex",
@@ -155,8 +157,11 @@ function MusicPlayer({
               src={currentSong.cover}
               alt={currentSong.title}
               style={{
-                width: "60px",
-                height: "60px",
+                width: "70px",
+                height: "70px",
+                borderRadius: "8px",
+                boxShadow:
+                  "0px 5px 20px rgba(0,0,0,0.5)",
                 objectFit: "cover",
                 borderRadius: "4px",
               }}
@@ -210,8 +215,10 @@ function MusicPlayer({
                 style={{
                   background: "#1DB954",
                   border: "none",
-                  width: "50px",
-                  height: "50px",
+                  width: "60px",
+                  height: "60px",
+                  boxShadow:
+                    "0px 5px 20px rgba(29,185,84,0.5)",
                   borderRadius: "50%",
                   cursor: "pointer",
                   fontSize: "18px",
@@ -226,7 +233,7 @@ function MusicPlayer({
                   background: "transparent",
                   color: "white",
                   border: "none",
-                  fontSize: "22px",
+                  fontSize: "30px",
                   cursor: "pointer",
                 }}
               >
