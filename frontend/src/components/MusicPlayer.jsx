@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import "./MusicPlayer.css";
 
 function MusicPlayer({
   songs,
@@ -19,33 +20,40 @@ function MusicPlayer({
 
       audioRef.current
         .play()
-        .then(() => {
-          setIsPlaying(true);
-        })
-        .catch((err) => console.log(err));
+        .then(() => setIsPlaying(true))
+        .catch(console.error);
     }
-  }, [currentSong, setIsPlaying]);
+  }, [currentSong]);
 
   useEffect(() => {
     const audio = audioRef.current;
 
     if (!audio) return;
 
-    const updateTime = () => {
+    const updateTime = () =>
       setCurrentTime(audio.currentTime);
-    };
 
-    const updateDuration = () => {
+    const updateDuration = () =>
       setDuration(audio.duration);
-    };
 
     const handleSongEnd = () => {
       nextSong();
     };
 
-    audio.addEventListener("timeupdate", updateTime);
-    audio.addEventListener("loadedmetadata", updateDuration);
-    audio.addEventListener("ended", handleSongEnd);
+    audio.addEventListener(
+      "timeupdate",
+      updateTime
+    );
+
+    audio.addEventListener(
+      "loadedmetadata",
+      updateDuration
+    );
+
+    audio.addEventListener(
+      "ended",
+      handleSongEnd
+    );
 
     return () => {
       audio.removeEventListener(
@@ -124,192 +132,111 @@ function MusicPlayer({
     }
   };
 
+  if (!currentSong) return null;
+
   return (
-    <div
-      style={{
-        position: "fixed",
-        bottom: 0,
-        left: 250,
-        right: 0,
-        height: "110px",
-        boxShadow:
-          "0px -5px 15px rgba(0,0,0,0.3)",
-        backgroundColor: "#181818",
-        borderTop: "1px solid #333",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "0 25px",
-      }}
-    >
-      {currentSong ? (
-        <>
-          {/* LEFT */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "15px",
-              width: "250px",
-            }}
-          >
-            <img
-              src={currentSong.cover}
-              alt={currentSong.title}
-              style={{
-                width: "70px",
-                height: "70px",
-                borderRadius: "8px",
-                boxShadow:
-                  "0px 5px 20px rgba(0,0,0,0.5)",
-                objectFit: "cover",
-                borderRadius: "4px",
-              }}
-            />
+    <div className="music-player">
+      <div className="song-info">
+        <img
+          src={currentSong.cover}
+          alt={currentSong.title}
+          className="song-cover"
+        />
 
-            <div>
-              <h4>{currentSong.title}</h4>
+        <div>
+          <div className="song-title-row">
+            <h4>{currentSong.title}</h4>
 
-              <p
-                style={{
-                  color: "gray",
-                }}
-              >
-                {currentSong.artist}
-              </p>
-            </div>
+            <span className="like-btn">
+              ♡
+            </span>
           </div>
 
-          {/* CENTER */}
-          <div
+          <p
             style={{
-              width: "550px",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "10px",
+              color: "#b3b3b3",
             }}
           >
-            <div
-              style={{
-                display: "flex",
-                gap: "15px",
-                alignItems: "center",
-              }}
-            >
-              <button
-                onClick={previousSong}
-                style={{
-                  background: "transparent",
-                  color: "white",
-                  border: "none",
-                  fontSize: "22px",
-                  cursor: "pointer",
-                }}
-              >
-                ⏮
-              </button>
+            {currentSong.artist}
+          </p>
+        </div>
+      </div>
 
-              <button
-                onClick={togglePlayPause}
-                style={{
-                  background: "#1DB954",
-                  border: "none",
-                  width: "60px",
-                  height: "60px",
-                  boxShadow:
-                    "0px 5px 20px rgba(29,185,84,0.5)",
-                  borderRadius: "50%",
-                  cursor: "pointer",
-                  fontSize: "18px",
-                }}
-              >
-                {isPlaying ? "⏸" : "▶"}
-              </button>
-
-              <button
-                onClick={nextSong}
-                style={{
-                  background: "transparent",
-                  color: "white",
-                  border: "none",
-                  fontSize: "30px",
-                  cursor: "pointer",
-                }}
-              >
-                ⏭
-              </button>
-            </div>
-
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                gap: "10px",
-              }}
-            >
-              <span>
-                {formatTime(currentTime)}
-              </span>
-
-              <input
-                type="range"
-                min="0"
-                max={duration || 0}
-                value={currentTime}
-                onChange={(e) => {
-                  audioRef.current.currentTime =
-                    e.target.value;
-
-                  setCurrentTime(
-                    e.target.value
-                  );
-                }}
-                style={{
-                  flex: 1,
-                }}
-              />
-
-              <span>
-                {formatTime(duration)}
-              </span>
-            </div>
-          </div>
-
-          {/* RIGHT */}
-          <div
-            style={{
-              width: "200px",
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-            }}
+      <div className="player-center">
+        <div className="controls">
+          <button
+            className="control-btn"
+            onClick={previousSong}
           >
-            <span>🔊</span>
+            ⏮
+          </button>
 
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={(e) =>
-                changeVolume(e.target.value)
-              }
-            />
-          </div>
+          <button
+            className="play-btn"
+            onClick={togglePlayPause}
+          >
+            {isPlaying ? "⏸" : "▶"}
+          </button>
 
-          <audio ref={audioRef}>
-            <source
-              src={currentSong.audio}
-              type="audio/mpeg"
-            />
-          </audio>
-        </>
-      ) : (
-        <p>Select a song</p>
-      )}
+          <button
+            className="control-btn"
+            onClick={nextSong}
+          >
+            ⏭
+          </button>
+        </div>
+
+        <div className="progress-row">
+          <span>
+            {formatTime(currentTime)}
+          </span>
+
+          <input
+            type="range"
+            min="0"
+            max={duration || 0}
+            value={currentTime}
+            onChange={(e) => {
+              audioRef.current.currentTime =
+                e.target.value;
+
+              setCurrentTime(
+                e.target.value
+              );
+            }}
+            style={{ flex: 1 }}
+          />
+
+          <span>
+            {formatTime(duration)}
+          </span>
+        </div>
+      </div>
+
+      <div className="volume-section">
+        <span className="volume-icon">
+          🔊
+        </span>
+
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={(e) =>
+            changeVolume(e.target.value)
+          }
+          style={{ flex: 1 }}
+        />
+      </div>
+
+      <audio ref={audioRef}>
+        <source
+          src={currentSong.audio}
+          type="audio/mpeg"
+        />
+      </audio>
     </div>
   );
 }

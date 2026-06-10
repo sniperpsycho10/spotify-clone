@@ -1,0 +1,166 @@
+.music-player {
+  position: fixed;
+
+  bottom: 12px;
+  left: 270px;
+  right: 12px;
+
+  height: 110px;
+
+  background: rgba(30, 30, 30, 0.65);
+
+  backdrop-filter: blur(35px);
+  -webkit-backdrop-filter: blur(35px);
+
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-left: 1px solid rgba(255,255,255,0.03);
+
+  border-radius: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 25px;
+
+  box-shadow:
+    0px -8px 30px rgba(0,0,0,0.45),
+    inset 0px 1px 0px rgba(255,255,255,0.05);
+
+  z-index: 999;
+}
+
+.song-info {
+  width: 280px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.song-cover {
+  width: 70px;
+  height: 70px;
+
+  object-fit: cover;
+
+  border-radius: 10px;
+
+  box-shadow:
+    0px 10px 30px rgba(0,0,0,0.6);
+
+  transition: all 0.3s ease;
+}
+
+.song-cover:hover {
+  transform: scale(1.06);
+}
+
+.song-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.like-btn {
+  color: #1db954;
+
+  cursor: pointer;
+
+  font-size: 22px;
+
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  transform: scale(1.25);
+}
+
+.player-center {
+  width: 600px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.control-btn {
+  background: transparent;
+  border: none;
+
+  color: white;
+
+  font-size: 34px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.control-btn:hover {
+  transform: scale(1.2);
+  color: #1db954;
+}
+
+.play-btn {
+  width: 72px;
+  height: 72px;
+
+  border-radius: 50%;
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    #1ed760,
+    #1db954
+  );
+
+  font-size: 24px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 30px rgba(29,185,84,.6);
+
+  transition: all 0.3s ease;
+}
+
+.play-btn:hover {
+  transform: scale(1.12);
+}
+
+
+.play-btn:hover {
+  transform: scale(1.1);
+}
+
+.progress-row {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.volume-section {
+  width: 220px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.volume-icon {
+  font-size: 24px;
+
+  filter: drop-shadow(
+    0px 0px 6px rgba(29,185,84,.4)
+  );
+}
