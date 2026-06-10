@@ -8,46 +8,49 @@ function Sidebar() {
         backgroundColor: "#000",
         height: "100vh",
         padding: "20px",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      <h2>Spotify</h2>
+      <h1
+        style={{
+          marginBottom: "30px",
+          color: "#1DB954",
+        }}
+      >
+        Spotify
+      </h1>
 
-      <div style={{ marginTop: "30px" }}>
-        <Link
-          to="/"
-          style={{
-            color: "white",
-            textDecoration: "none",
-          }}
-        >
-          🏠 Home
-        </Link>
+      <Link
+        to="/"
+        style={{
+          color: "white",
+          textDecoration: "none",
+          marginBottom: "20px",
+        }}
+      >
+        🏠 Home
+      </Link>
 
-        <br />
-        <br />
+      <Link
+        to="/search"
+        style={{
+          color: "white",
+          textDecoration: "none",
+          marginBottom: "30px",
+        }}
+      >
+        🔍 Search
+      </Link>
 
-        <Link
-          to="/search"
-          style={{
-            color: "white",
-            textDecoration: "none",
-          }}
-        >
-          🔍 Search
-        </Link>
+      <h3>Your Library</h3>
 
-        <br />
-        <br />
+      <div style={{ marginTop: "20px" }}>
+        <p>➕ Create Playlist</p>
+      </div>
 
-        <Link
-          to="/library"
-          style={{
-            color: "white",
-            textDecoration: "none",
-          }}
-        >
-          📚 Your Library
-        </Link>
+      <div style={{ marginTop: "15px" }}>
+        <p>❤️ Liked Songs</p>
       </div>
     </div>
   );

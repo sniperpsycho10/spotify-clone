@@ -1,6 +1,7 @@
-function SongCard({ title, artist }) {
+function SongCard({ song, onSelectSong }) {
   return (
     <div
+      onClick={() => onSelectSong(song)}
       style={{
         backgroundColor: "#181818",
         width: "180px",
@@ -18,8 +19,11 @@ function SongCard({ title, artist }) {
         }}
       ></div>
 
-      <h3>{title}</h3>
-      <p style={{ color: "gray" }}>{artist}</p>
+      <h3>{song.title}</h3>
+
+      <p style={{ color: "gray" }}>
+        {song.artist}
+      </p>
     </div>
   );
 }

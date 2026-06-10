@@ -1,7 +1,7 @@
 import SongCard from "../components/SongCard";
 import songs from "../songs";
 
-function Home() {
+function Home({ onSelectSong }) {
   return (
     <div>
       <h1>Good Evening</h1>
@@ -21,8 +21,8 @@ function Home() {
         {songs.map((song) => (
           <SongCard
             key={song.id}
-            title={song.title}
-            artist={song.artist}
+            song={song}
+            onSelectSong={onSelectSong}
           />
         ))}
       </div>

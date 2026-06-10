@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 import Sidebar from "./components/Sidebar";
+import MusicPlayer from "./components/MusicPlayer";
 
 import Home from "./pages/Home";
 import Search from "./pages/Search";
@@ -7,23 +10,49 @@ import Library from "./pages/Library";
 import { Routes, Route } from "react-router-dom";
 
 function App() {
-  return (
-    <div style={{ display: "flex" }}>
-      <Sidebar />
+  const [currentSong, setCurrentSong] = useState(null);
 
+  return (
+    <>
       <div
         style={{
-          flex: 1,
-          padding: "30px",
+          display: "flex",
         }}
       >
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
-          <Route path="/library" element={<Library />} />
-        </Routes>
+        <Sidebar />
+
+        <div
+          style={{
+            flex: 1,
+            padding: "30px",
+            marginBottom: "100px",
+          }}
+        >
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Home
+                  onSelectSong={setCurrentSong}
+                />
+              }
+            />
+
+            <Route
+              path="/search"
+              element={<Search />}
+            />
+
+            <Route
+              path="/library"
+              element={<Library />}
+            />
+          </Routes>
+        </div>
       </div>
-    </div>
+
+      <MusicPlayer currentSong={currentSong} />
+    </>
   );
 }
 
