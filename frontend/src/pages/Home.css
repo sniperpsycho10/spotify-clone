@@ -1,0 +1,64 @@
+.top-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  background: rgba(18, 18, 18, 0.95);
+
+  backdrop-filter: blur(10px);
+
+  padding: 15px 0;
+
+  margin-bottom: 20px;
+}
+
+.top-bar h2 {
+  color: white;
+}
+
+.hero-section {
+  background: linear-gradient(
+    to bottom,
+    #5038a0,
+    #121212
+  );
+
+  padding: 40px;
+
+  border-radius: 16px;
+
+  margin-bottom: 40px;
+}
+
+.hero-section h1 {
+  font-size: 56px;
+  margin-bottom: 10px;
+}
+
+.hero-section p {
+  color: #ddd;
+}
+
+.section {
+  margin-bottom: 40px;
+}
+
+.section h2 {
+  margin-bottom: 20px;
+}
+
+.section-row {
+  display: flex;
+
+  gap: 20px;
+
+  overflow-x: auto;
+
+  padding-bottom: 10px;
+
+  scroll-behavior: smooth;
+}
+
+.section-row::-webkit-scrollbar {
+  display: none;
+}

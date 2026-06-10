@@ -1,33 +1,31 @@
 import SongCard from "../components/SongCard";
 import songs from "../songs";
+import "./Home.css";
 
 function Home({ onSelectSong }) {
+  const hour = new Date().getHours();
+
+  let greeting = "Good Evening";
+
+  if (hour < 12) {
+    greeting = "Good Morning";
+  } else if (hour < 18) {
+    greeting = "Good Afternoon";
+  }
+
   return (
     <div>
-      <div
-        style={{
-          background:
-            "linear-gradient(to bottom,#5038a0,#121212)",
-          padding: "40px",
-          borderRadius: "12px",
-          marginBottom: "40px",
-        }}
-      >
-        <h1
-          style={{
-            fontSize: "48px",
-          }}
-        >
-          Good Evening
-        </h1>
+      {/* Sticky Header */}
+      <div className="top-bar">
+        <h2>Spotify Clone</h2>
+      </div>
 
-        <p
-          style={{
-            marginTop: "10px",
-            color: "#ddd",
-          }}
-        >
-          Welcome back to Spotify Clone
+      {/* Hero Section */}
+      <div className="hero-section">
+        <h1>{greeting}</h1>
+
+        <p>
+          Welcome back to your Spotify Clone
         </p>
       </div>
 
@@ -48,6 +46,12 @@ function Home({ onSelectSong }) {
         songs={songs}
         onSelectSong={onSelectSong}
       />
+
+      <Section
+        title="Popular Artists"
+        songs={songs}
+        onSelectSong={onSelectSong}
+      />
     </div>
   );
 }
@@ -58,24 +62,10 @@ function Section({
   onSelectSong,
 }) {
   return (
-    <>
-      <h2
-        style={{
-          marginBottom: "20px",
-          marginTop: "30px",
-        }}
-      >
-        {title}
-      </h2>
+    <div className="section">
+      <h2>{title}</h2>
 
-      <div
-        style={{
-          display: "flex",
-          gap: "20px",
-          overflowX: "auto",
-          paddingBottom: "10px",
-        }}
-      >
+      <div className="section-row">
         {songs.map((song) => (
           <SongCard
             key={`${title}-${song.id}`}
@@ -84,7 +74,7 @@ function Section({
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
