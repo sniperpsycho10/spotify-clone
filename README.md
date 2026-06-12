@@ -294,6 +294,8 @@ Add screenshots of:
 
 ## 👨‍💻 Author
 
+Akanksha Singh
+
 Built as a personal learning project to explore modern full-stack web development and music streaming application architecture.
 
 
