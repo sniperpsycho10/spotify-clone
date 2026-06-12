@@ -1,64 +1,154 @@
-# 🎵 Spotify Clone
+# Spotify Clone 🎵
 
-A modern Spotify-inspired music streaming web application built using **React.js**. This project replicates many core Spotify features including music playback, search, playlists, liked songs, recently played tracks, queue management, keyboard shortcuts, and a responsive glassmorphism-based UI.
+A modern Spotify-inspired music streaming web application built with React, Context API, Node.js, Express, and external music APIs.
+
+This project was built to practice full-stack web development, state management, API integration, routing, and modern UI design while recreating core Spotify functionality.
 
 ---
 
 ## 🚀 Features
 
-### 🎧 Music Player
+### 🎵 Music Player
 
-* Play / Pause songs
+* Play songs from local library
+* Play song previews from iTunes API
+* Play / Pause controls
 * Next / Previous track controls
-* Progress bar with seeking support
+* Shuffle mode
+* Repeat mode
 * Volume control
-* Keyboard shortcuts
-* Glassmorphism player UI
+* Progress bar with seeking support
+* Automatic queue playback
+
+---
+
+### 🔍 Search System
+
+* Real-time search using iTunes API
+* Debounced API requests
+* Search by:
+
+  * Song name
+  * Artist name
+  * Album name
+* Dynamic search results
+* Song artwork display
+* Playable preview tracks
+
+---
 
 ### ❤️ Liked Songs
 
-* Like / Unlike songs
-* Persistent storage using Local Storage
+* Like songs
+* Remove liked songs
+* Persistent storage using LocalStorage
 * Dedicated Liked Songs page
 
-### 📚 Library System
+---
 
-* User Library section
-* Recently Played songs
-* Playlist management
+### 📚 Library Management
 
-### 🔎 Search
+* View saved music collection
+* Manage playlists
+* Access liked songs
+* Access statistics dashboard
 
-* Real-time song search
-* Instant filtering
-* Clean Spotify-inspired UI
+---
 
-### 🎵 Playlist Management
+### 📁 Playlist System
 
 * Create playlists
 * Add songs to playlists
-* Persistent storage
+* Remove songs from playlists
+* Rename playlists
+* Delete playlists
+* Persistent LocalStorage storage
 
-### 📋 Queue System
+---
+
+### ⏭️ Queue Management
 
 * Add songs to queue
-* Queue visualization
-* Up Next sidebar
+* Remove songs from queue
+* Reorder queue
+* Queue autoplay
+* Queue persistence
+* Clear queue functionality
 
-### ⌨️ Keyboard Shortcuts
+---
 
-* Space → Play / Pause
-* Right Arrow → Skip forward 10 seconds
-* Left Arrow → Skip backward 10 seconds
+### 🕒 Recently Played
 
-### 🎨 Modern UI
+* Automatically tracks played songs
+* Stores listening history
+* Displays recent listening activity
+* Persistent LocalStorage storage
+
+---
+
+### 🎯 Recommendation System
+
+* Personalized recommendations
+* Based on:
+
+  * Recently Played
+  * Liked Songs
+* Dynamic recommendation cards
+* Playable recommendations
+
+---
+
+### 📊 Statistics Dashboard
+
+Displays:
+
+* Total Liked Songs
+* Total Playlists
+* Recently Played Count
+* Songs in Queue
+* Favorite Artist
+* Most Played Song
+
+Inspired by Spotify Wrapped analytics.
+
+---
+
+### 🌐 API Integration
+
+Powered by:
+
+* iTunes Search API
+
+Dynamic sections include:
+
+#### 🔥 Trending Now
+
+Shows trending music fetched from API.
+
+#### 🎯 Made For You
+
+Personalized recommendations based on listening activity.
+
+#### 🌍 Discover
+
+Explore new artists and tracks.
+
+#### 🎵 Recommended For You
+
+Dynamic recommendation section powered by listening history.
+
+---
+
+### 🎨 User Interface
 
 * Spotify-inspired design
-* Glassmorphism music player
-* React Icons integration
-* Hover animations
 * Responsive layout
-* Right Sidebar panel
+* Dynamic backgrounds
+* Glassmorphism effects
+* Hover animations
+* Sidebar navigation
+* Right activity panel
+* Bottom music player
 
 ---
 
@@ -66,145 +156,142 @@ A modern Spotify-inspired music streaming web application built using **React.js
 
 ### Frontend
 
-* React.js
+* React
 * React Router DOM
+* React Context API
+* Axios
 * React Icons
 * CSS3
 
-### State Management
+### Backend
 
-* React Context API
+* Node.js
+* Express.js
+* Axios
+* CORS
+* dotenv
+
+### APIs
+
+* iTunes Search API
 
 ### Storage
 
-* Local Storage
-
-### Build Tool
-
-* Vite
+* LocalStorage
 
 ---
 
 ## 📂 Project Structure
 
 ```text
-src/
+SpotifyClone/
 │
-├── components/
-│   ├── MusicPlayer.jsx
-│   ├── Sidebar.jsx
-│   ├── RightSidebar.jsx
-│   ├── SongCard.jsx
-│   ├── PlaylistModal.jsx
+├── frontend/
+│   ├── components/
+│   ├── pages/
+│   ├── context/
+│   ├── assets/
+│   └── songs.js
 │
-├── context/
-│   └── MusicContext.jsx
+├── backend/
+│   ├── routes/
+│   ├── server.js
+│   └── .env
 │
-├── pages/
-│   ├── Home.jsx
-│   ├── Search.jsx
-│   ├── Library.jsx
-│   └── LikedSongs.jsx
-│
-├── songs.js
-├── App.jsx
-└── main.jsx
+└── README.md
 ```
 
 ---
 
 ## ⚙️ Installation
 
-Clone the repository:
+### Clone Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/spotify-clone.git
+git clone <repository-url>
+cd SpotifyClone
 ```
 
-Navigate into project:
+### Backend Setup
 
 ```bash
-cd spotify-clone/frontend
-```
+cd backend
 
-Install dependencies:
-
-```bash
 npm install
+
+npm run dev
 ```
 
-Run development server:
+Backend runs on:
+
+```text
+http://localhost:5000
+```
+
+### Frontend Setup
 
 ```bash
+cd frontend
+
+npm install
+
 npm run dev
+```
+
+Frontend runs on:
+
+```text
+http://localhost:5173
 ```
 
 ---
 
-## 🎯 Current Progress
+## 🎯 Learning Objectives
 
-### Completed
+This project demonstrates:
 
-* Music Playback
-* Search System
-* Liked Songs
-* Playlist Creation
-* Recently Played
-* Queue UI
-* Glassmorphism Player
-* Keyboard Shortcuts
-* React Icons Upgrade
-* Responsive Layout
+* React Component Architecture
+* Context API State Management
+* API Integration
+* Backend Development with Express
+* REST API Consumption
+* Local Storage Persistence
+* Dynamic Routing
+* Music Player Logic
+* Queue Management Systems
+* Recommendation Systems
+* Analytics Dashboard Development
 
-### Upcoming Features
+---
 
-* Functional Queue Playback Logic
-* Dynamic Album Colors
-* Animated Equalizer
-* Artist Pages
-* Album Pages
-* Mobile Optimization
-* Advanced Playlist Features
+## 🔮 Future Improvements
+
+* User Authentication
+* Spotify OAuth Login
+* Backend Database Integration
+* User Accounts
+* Real Music Streaming
+* Dark/Light Theme Support
+* Drag & Drop Playlists
+* Mobile Responsive Optimization
+* Lyrics Integration
+* Advanced Recommendation Engine
 
 ---
 
 ## 📸 Screenshots
 
-Add screenshots here after deployment.
+Add screenshots of:
 
----
-
-## 🎓 Learning Outcomes
-
-Through this project I learned:
-
-* React Components
-* React Hooks
-* Context API
-* State Management
-* React Router
-* Local Storage
-* UI/UX Design
-* Component Architecture
-* Responsive Design
-* Frontend Project Structuring
+* Home Page
+* Search Page
+* Music Player
+* Queue System
+* Playlist Page
+* Statistics Dashboard
 
 ---
 
 ## 👨‍💻 Author
 
-Built by **Sniper Psycho**
-
-GitHub: https://github.com/YOUR_USERNAME
-
----
-
-## ⭐ Support
-
-If you like this project:
-
-⭐ Star the repository
-
-🍴 Fork the project
-
-🚀 Build upon it
+Built as a personal learning project to explore modern full-stack web development and music streaming application architecture.
