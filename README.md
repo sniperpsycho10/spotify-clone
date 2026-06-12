@@ -295,3 +295,28 @@ Add screenshots of:
 ## 👨‍💻 Author
 
 Built as a personal learning project to explore modern full-stack web development and music streaming application architecture.
+
+
+# 🎥 Project Demo
+
+A complete demonstration of the Spotify Clone can be viewed here:
+
+https://youtu.be/TGnMAksPbcQ
+
+The demo showcases:
+
+* Home Page with Dynamic Music Sections
+* Real-Time Song Search using iTunes API
+* Music Preview Playback
+* Play / Pause, Next, Previous Controls
+* Queue Management System
+* Queue Reordering Functionality
+* Liked Songs Management
+* Playlist Creation and Management
+* Recently Played Tracking
+* Personalized Recommendation Engine
+* Statistics Dashboard
+* Dynamic Trending Songs Section
+* Made For You Recommendations
+* Discover Music Feature
+* Responsive Spotify-Inspired User Interface
